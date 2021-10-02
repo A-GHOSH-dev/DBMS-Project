@@ -1,6 +1,7 @@
 # DBMS-Project
 Miniproject component Virtusa. 
-##Team: 
+
+## Team: 
 Ananya, Sristi, Ganesh, Rajshree
 
 
