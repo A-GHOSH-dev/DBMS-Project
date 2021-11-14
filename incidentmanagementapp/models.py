@@ -3,29 +3,6 @@ import os
 #from twilio.rest import Client
 
 # Create your models here.
-#signup
-class SignUp(models.Model):
-    emp_id = models.CharField(max_length=50)
-    email = models.CharField(max_length=50)  
-    name = models.CharField(max_length=50)
-    Department = models.CharField(max_length=50)
-    FactoryNumber = models.CharField(max_length=50)
-    phone = models.CharField(max_length=15)
-    password1 = models.CharField(max_length=20)
-    password2 = models.CharField(max_length=20)
-    
-    def __str__(self):
-        return self.emp_id + ' ' + self.email + ' ' + self.name
-
-
-#login
-class Login(models.Model):
-    loginemp_id = models.CharField(max_length=50)
-    loginpassword = models.CharField(max_length=15)  
-   
-    
-    def __str__(self):
-        return self.loginemp_id + ' ' + self.loginpassword
 
 #adduser
 class AddUser(models.Model):
@@ -71,4 +48,50 @@ class AssignInvestigator(models.Model):
     def __str__(self):
         return self.incident_id + ' ' + self.emailassignedinvestigator
 
+#whywhyanalysis
+class WhyWhyAnalyzing(models.Model):
+    whyinc_id=models.CharField(max_length=50)
+    ps=models.CharField(max_length=500)
+    why1=models.CharField(max_length=200)
+    why2=models.CharField(max_length=200)
+    why3=models.CharField(max_length=200)
+    why4=models.CharField(max_length=200)
+    why5=models.CharField(max_length=200)
+    rc=models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.whyinc_id
+
+#specialanalysis
+class SpecialAnalyzing(models.Model):
+    speinc_id=models.CharField(max_length=50)
+    speicua=models.CharField(max_length=500)
+    speicuc=models.CharField(max_length=500)
+    sperchf=models.CharField(max_length=500)
+    spercof=models.CharField(max_length=500)
+    icuao=models.CharField(max_length=500)
+    icuco=models.CharField(max_length=500)
+    rchfo=models.CharField(max_length=500)
+    rcofo=models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.speinc_id
+#final report
+class FinalReport(models.Model):
+    #speinc_id=models.CharField(max_length=50)
+    reinc_id=models.CharField(max_length=50)
+    sum=models.CharField(max_length=500)
+    img=models.CharField(max_length=500)
+    rca=models.CharField(max_length=500)
+    imc=models.CharField(max_length=500)
+    rtc=models.CharField(max_length=500)
+    ca=models.CharField(max_length=500)   
+    cap=models.CharField(max_length=500)
+    cad=models.DateField(max_length=500)
+    pa=models.CharField(max_length=500)   
+    pap=models.CharField(max_length=500)
+    pat=models.DateField(max_length=500)
+
+    def __str__(self):
+        return self.reinc_id
 

@@ -4,6 +4,9 @@
 {% block body %}
 <main class="mt-5 pt-5 p-5">
     <div class="container-fluid">
+      {% for msg in messages %}
+      {{msg}}
+      {% endfor %}
       <form action="/assignleadeinvestigator" method="POST">
         {% csrf_token %}
 

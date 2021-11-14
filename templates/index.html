@@ -4,6 +4,9 @@
 {% block body %}
 <main class="mt-5 pt-3">
   <div class="container-fluid">
+    {% for msg in messages %}
+    {{msg}}
+    {% endfor %}
     <div class="row">
       <div class="col-md-12">
         <h4>Dashboard</h4>

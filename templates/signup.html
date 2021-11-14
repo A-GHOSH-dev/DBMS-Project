@@ -3,7 +3,10 @@
 {% block body %}
 <main class="mt-5 pt-5 p-5">
     <div class="container-fluid">
-<form>
+
+      <img src="{% static 'images/signup.gif' %}" class="img-fluid" alt="...">
+      <form action="/signup" method="POST">
+        {% csrf_token %}
   <div class="mb-3">
     <label for="emp_id" class="form-label">Employee ID</label>
     <input type="text" class="form-control" name="emp_id" id="emp_id" aria-describedby="emp_idHelp">

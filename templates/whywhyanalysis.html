@@ -5,7 +5,11 @@
 {% block body %}
 <main class="mt-5 pt-5 p-5">
     <div class="container-fluid">
-<form>
+      {% for msg in messages %}
+      {{msg}}
+      {% endfor %}
+      <form action="/whywhyanalysis" method="POST">
+        {% csrf_token %}
     <div class="mb-3">
         <label for="whyinc_id" class="form-label">Incident ID</label>
         <input type="text" class="form-control" name="whyinc_id" id="whyinc_id" aria-describedby="emp_idHelp">
@@ -14,44 +18,44 @@
 
     <div class="input control-group after-add-more">
         <div class="mb-3">
-            <label for="ps1" class="form-label">Problem Statement 1</label>
-            <input type="text" class="form-control" name="ps1" id="ps1" aria-describedby="emp_idHelp">
+            <label for="ps" class="form-label">Problem Statements</label>
+            <input type="text" class="form-control" name="ps" id="ps" aria-describedby="emp_idHelp">
             
           </div>
           <div class="mb-3">
-            <label for="1why1" class="form-label">Why 1</label>
-            <input type="text" class="form-control" name="1why1" id="1why1" aria-describedby="emp_idHelp">
+            <label for="why1" class="form-label">Why 1</label>
+            <input type="text" class="form-control" name="why1" id="why1" aria-describedby="emp_idHelp">
             
           </div>
           <div class="mb-3">
-            <label for="1why2" class="form-label">Why 2</label>
-            <input type="text" class="form-control" name="1why2" id="1why2" aria-describedby="emp_idHelp">
+            <label for="why2" class="form-label">Why 2</label>
+            <input type="text" class="form-control" name="why2" id="why2" aria-describedby="emp_idHelp">
             
           </div>
           <div class="mb-3">
-            <label for="1why3" class="form-label">Why 3</label>
-            <input type="text" class="form-control" name="1why3" id="1why3" aria-describedby="emp_idHelp">
+            <label for="why3" class="form-label">Why 3</label>
+            <input type="text" class="form-control" name="why3" id="why3" aria-describedby="emp_idHelp">
             
           </div>
           <div class="mb-3">
-            <label for="1why4" class="form-label">Why 4</label>
-            <input type="text" class="form-control" name="1why4" id="1why4" aria-describedby="emp_idHelp">
+            <label for="why4" class="form-label">Why 4</label>
+            <input type="text" class="form-control" name="why4" id="why4" aria-describedby="emp_idHelp">
             
           </div>
           <div class="mb-3">
-            <label for="1why5" class="form-label">Why 5</label>
-            <input type="text" class="form-control" name="1why5" id="1why5" aria-describedby="emp_idHelp">
+            <label for="why5" class="form-label">Why 5</label>
+            <input type="text" class="form-control" name="why5" id="why5" aria-describedby="emp_idHelp">
             
           </div>
           <div class="mb-3">
-            <label for="rc1" class="form-label">Root Causes</label>
-            <input type="text" class="form-control" name="rc1" id="rc1" aria-describedby="emp_idHelp">
+            <label for="rc" class="form-label">Root Causes</label>
+            <input type="text" class="form-control" name="rc" id="rc" aria-describedby="emp_idHelp">
             
           </div>
  
     
     <div class="input-group-btn"> 
-      <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+      <button class="btn btn-success add-more" type="submit"><i class="glyphicon glyphicon-plus"></i> Submit</button>
     </div>
   </div>
 
@@ -59,72 +63,9 @@
   </form>
 
 
-  <!-- Copy Fields -->
-  <div class="copy hide">
-    <div class="control-group input" style="margin-top:10px">
-        <div class="mb-3">
-            <label for="ps2" class="form-label">Problem Statement 2</label>
-            <input type="text" class="form-control" name="ps2" id="ps2" aria-describedby="emp_idHelp">
-            
-          </div>
-          <div class="mb-3">
-            <label for="2why1" class="form-label">Why 1</label>
-            <input type="text" class="form-control" name="2why1" id="2why1" aria-describedby="emp_idHelp">
-            
-          </div>
-          <div class="mb-3">
-            <label for="2why2" class="form-label">Why 2</label>
-            <input type="text" class="form-control" name="2why2" id="2why2" aria-describedby="emp_idHelp">
-            
-          </div>
-          <div class="mb-3">
-            <label for="2why3" class="form-label">Why 3</label>
-            <input type="text" class="form-control" name="2why3" id="2why3" aria-describedby="emp_idHelp">
-            
-          </div>
-          <div class="mb-3">
-            <label for="2why4" class="form-label">Why 4</label>
-            <input type="text" class="form-control" name="2why4" id="2why4" aria-describedby="emp_idHelp">
-            
-          </div>
-          <div class="mb-3">
-            <label for="2why5" class="form-label">Why 5</label>
-            <input type="text" class="form-control" name="2why5" id="2why5" aria-describedby="emp_idHelp">
-            
-          </div>
-          <div class="mb-3">
-            <label for="rc2" class="form-label">Root Causes</label>
-            <input type="text" class="form-control" name="rc2" id="rc2" aria-describedby="emp_idHelp">
-            
-          </div>
-      <div class="input-group-btn"> 
-        <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
-      </div>
-    </div>
-  </div>
+
   </div>
   </main>
 
-  <script type="text/javascript">
-
-
-    $(document).ready(function() {
-
-
-      $(".add-more").click(function(){ 
-          var html = $(".copy").html();
-          $(".after-add-more").after(html);
-      });
-
-
-      $("body").on("click",".remove",function(){ 
-          $(this).parents(".control-group").remove();
-      });
-
-
-    });
-
-
-</script>
-
+  
 {% endblock body %}

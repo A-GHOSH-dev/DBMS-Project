@@ -4,7 +4,11 @@
 {% block body %}
 <main class="mt-5 pt-5 p-5">
     <div class="container-fluid">
-<form>
+      {% for msg in messages %}
+      {{msg}}
+      {% endfor %}
+      <form action="/adduser" method="POST">
+        {% csrf_token %}
   <div class="mb-3">
     <label for="addemp_id" class="form-label">Employee ID</label>
     <input type="text" class="form-control" name="addemp_id" id="addemp_id" aria-describedby="emp_idHelp">

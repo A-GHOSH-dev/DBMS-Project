@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
-#from incidentmanagementapp.models import SignUp, Login, AddUser, IncidentReporting, AssignInvestigator, CustomerOrder
+from incidentmanagementapp.models import WhyWhyAnalyzing, AddUser, IncidentReporting, AssignInvestigator, SpecialAnalyzing, FinalReport
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -12,15 +12,6 @@ def allincidentslist(request):
     #return HttpResponse("This is my home page")
     return render(request, 'allincidentslist.html')
 
-def specialanalysis(request):
-    #return HttpResponse("This is my home page")
-    return render(request, 'specialanalysis.html')
-def investigationreport(request):
-    #return HttpResponse("This is my home page")
-    return render(request, 'investigationreport.html') 
-def finalinvestigationreport(request):
-    #return HttpResponse("This is my home page")
-    return render(request, 'finalinvestigationreport.html') 
 def actionclosure(request):
     #return HttpResponse("This is my home page")
     return render(request, 'actionclosure.html') 
@@ -63,7 +54,7 @@ def handleLogin(request):
         loginemp_id=request.POST['loginemp_id'] 
         loginpassword=request.POST['loginpassword']
 
-        user=authenticate(emp_id=loginemp_id, password1=loginpassword)
+        user=authenticate(username=loginemp_id, password=loginpassword)
         if user is not None:
             login(request, user)
             messages.success(request, "Successfully logged in")
@@ -98,6 +89,8 @@ def adduser(request):
         adduserdata = AddUser(addemp_id=addemp_id, addemail=addemail, addname=addname, addDepartment=addDepartment, addsection=addsection, addrole=addrole, addtraining=addtraining, addphone=addphone, addpassword1=addpassword1)  
 
         adduserdata.save()
+        messages.success(request, "User has been succesfully added")
+
         #return redirect('payment')
         #return render(request,"foodsordernow.html",{"Orders":farmerbuyorder})
         
@@ -129,6 +122,7 @@ def incidentreport(request):
         incidentreportingdata = IncidentReporting(datereport=datereport, timereport=timereport, reportedby=reportedby, dateincident=dateincident, timeincident=timeincident, locationincident=locationincident, incidentdesc=incidentdesc, incidentaction=incidentaction, victimname=victimname, victimrole=victimrole, victimemp_id=victimemp_id, victimcon_id=victimcon_id)  
 
         incidentreportingdata.save()
+        messages.success(request, "Incident has been succesfully reported")
         #return redirect('payment')
         #return render(request,"foodsordernow.html",{"Orders":farmerbuyorder})
         
@@ -149,6 +143,7 @@ def assignleadinvestigator(request):
         assignleadinvestigatorreport = AssignInvestigator(incident_id=incident_id, nameassignedinvestigator=nameassignedinvestigator, emailassignedinvestigator=emailassignedinvestigator)  
 
         assignleadinvestigatorreport.save()
+        messages.success(request, "Lead investigator has been succesfully assigned")
         #return redirect('payment')
         #return render(request,"foodsordernow.html",{"Orders":farmerbuyorder})
         
@@ -163,22 +158,22 @@ def whywhyanalysis(request):
     #return HttpResponse("This is my home page")
     #return render(request, 'whywhyanalysis.html')
     if request.method=="POST":
-        datereport=request.POST['datereport']
-        timereport=request.POST['timereport']
-        reportedby=request.POST['reportedby']
-        dateincident=request.POST['dateincident']
-        timeincident=request.POST['timeincident']
-        locationincident=request.POST['locationincident']
-        incidentdesc=request.POST['incidentdesc']
-        incidentaction=request.POST['incidentaction']
-        victimname=request.POST['victimname']
-        victimrole=request.POST['victimrole']
-        victimemp_id=request.POST['victimemp_id']
-        victimcon_id=request.POST['victimcon_id']
+        whyinc_id=request.POST['whyinc_id']
+        ps=request.POST['ps']
+        why1=request.POST['why1']
+        why2=request.POST['why2']
+        why3=request.POST['why3']
+        why4=request.POST['why4']
+        why5=request.POST['why5']
+        rc=request.POST['rc']
 
-        incidentreportingdata = IncidentReporting(datereport=datereport, timereport=timereport, reportedby=reportedby, dateincident=dateincident, timeincident=timeincident, locationincident=locationincident, incidentdesc=incidentdesc, incidentaction=incidentaction, victimname=victimname, victimrole=victimrole, victimemp_id=victimemp_id, victimcon_id=victimcon_id)  
+        whywhyanalysisdata = WhyWhyAnalyzing(whyinc_id=whyinc_id, ps=ps, why1=why1, why2=why2, why3=why3, why4=why4, why5=why5, rc=rc)  
 
-        incidentreportingdata.save()
+        whywhyanalysisdata.save()
+        messages.success(request, "Why Why Analysis Done")
+
+    
+        return redirect('specialanalysis')
         #return redirect('payment')
         #return render(request,"foodsordernow.html",{"Orders":farmerbuyorder})
         
@@ -186,3 +181,79 @@ def whywhyanalysis(request):
     #return render(request,"foodsordernow.html",{"Orders":adduserdata})
     return render(request,"whywhyanalysis.html")
 
+
+
+
+def specialanalysis(request):
+    #return HttpResponse("This is my home page")
+    #return render(request, 'whywhyanalysis.html')
+    if request.method=="POST":
+        speinc_id=request.POST['speinc_id']
+        speicua = request.POST.getlist('icua[]')
+        data_icua=''
+        if(len(speicua)>0):
+          for data_icua1 in speicua:
+            data_icua=data_icua+data_icua1 +" " 
+        icuao=request.POST['icuao']
+        speicuc = request.POST.getlist('icuc[]')
+        data_icuc=''
+        if(len(speicua)>0):
+          for data_icuc1 in speicua:
+            data_icuc=data_icuc+data_icuc1 +" " 
+        icuco=request.POST['icuco']
+        sperchf = request.POST.getlist('rchf[]')
+        data_rchf=''
+        if(len(sperchf)>0):
+          for data_rchf1 in sperchf:
+            data_rchf=data_rchf+data_rchf1 +" "  
+        rchfo=request.POST['rchfo'] 
+        spercof = request.POST.getlist('rcof[]')
+        data_rcof=''
+        if(len(spercof)>0):
+          for data_rcof1 in spercof:
+            data_rcof=data_rcof+data_rcof1 +" " 
+        rcofo=request.POST['rcofo']  
+
+        specialanalysisdata = SpecialAnalyzing(speinc_id=speinc_id, speicua=speicua, speicuc=speicuc, sperchf=sperchf, spercof=spercof, icuao=icuao, icuco=icuco, rchfo=rchfo, rcofo=rcofo)  
+
+        specialanalysisdata.save()
+        messages.success(request, "Special Analysis Done")
+
+    
+        return redirect('finalinvestigationreport')
+        #return redirect('payment')
+        #return render(request,"foodsordernow.html",{"Orders":farmerbuyorder})
+        
+        
+    #return render(request,"foodsordernow.html",{"Orders":adduserdata})
+    return render(request,"specialanalysis.html")
+
+
+def finalinvestigationreport(request):
+    #return HttpResponse("This is my home page")
+    #return render(request, 'whywhyanalysis.html')
+    if request.method=="POST":
+        reinc_id=request.POST['reinc_id']
+        sum=request.POST['sum']
+        img=request.POST['img']
+        rca=request.POST['rca']
+        imc=request.POST['imc']
+        rtc=request.POST['rtc']
+        ca=request.POST['ca']
+        cap=request.POST['cap']
+        cad=request.POST['cad']
+        pa=request.POST['pa']
+        pap=request.POST['pap']
+        pat=request.POST['pat']
+
+        finalinvestigationreportdata = FinalReport(reinc_id=reinc_id, sum=sum, img=img, rca=rca, imc=imc, rtc=rtc, ca=ca, cap=cap, cad=cad, pa=pa, pap=pap, pat=pat)  
+
+        finalinvestigationreportdata.save()
+        messages.success(request, "Investigation report succesfully saved")
+
+        #return redirect('payment')
+        #return render(request,"foodsordernow.html",{"Orders":farmerbuyorder})
+        
+        
+    #return render(request,"foodsordernow.html",{"Orders":adduserdata})
+    return render(request,"finalinvestigationreport.html")

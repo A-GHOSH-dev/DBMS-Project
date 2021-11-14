@@ -49,6 +49,24 @@
            
           </form>
           <ul class="navbar-nav">
+            {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle ms-2"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >Welcome {{request.user}}
+                <i class="bi bi-person-fill"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="/logout">LogOut</a></li>
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                
+              </ul>
+            </li>
+            {% else %}
             <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle ms-2"
@@ -57,14 +75,11 @@
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <i class="bi bi-person-fill"></i>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="#">LogOut</a></li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
                 
-              </ul>
+              </a>
+              
             </li>
+            {% endif %}
           </ul>
         </div>
       </div>
@@ -92,6 +107,7 @@
                 <span>Login</span>
               </a>
             </li> 
+            {% if user.is_authenticated %}
             <li>
               <a href="/adduser" class="nav-link px-3 active">
                 <span class="me-2"><i class="bi bi-speedometer2"></i></span>
@@ -153,6 +169,14 @@
                       <span>Special Analysis</span>
                     </a>
                   </li>
+                  <li>
+                    <a href="/finalinvestigationreport" class="nav-link px-3">
+                      <span class="me-2"
+                        ><i class="bi bi-speedometer2"></i
+                      ></span>
+                      <span>Investigation Report</span>
+                    </a>
+                  </li>
                 </ul>
               </div>
             </li>
@@ -179,6 +203,84 @@
                 <span>All Incident List Report</span>
               </a>
             </li>  
+            {% else %}
+            <li>
+              <a href="/adduser" class="nav-link px-3 active">
+                
+              </a>
+            </li> 
+            <li>
+              <a href="/incidentreport" class="nav-link px-3 active">
+               
+              </a>
+            </li> 
+            <li>
+              <a href="/assignleadinvestigator" class="nav-link px-3 active">
+                
+              </a>
+            </li> 
+            
+
+
+            <li>
+              <a
+                class="nav-link px-3 sidebar-link"
+                data-bs-toggle="collapse"
+                href="#layouts"
+              >
+               
+                <span class="ms-auto">
+                  <span class="right-icon">
+                    <i class="bi bi-chevron-down"></i>
+                  </span>
+                </span>
+              </a>
+              <div class="collapse" id="layouts">
+                <ul class="navbar-nav ps-3">
+                  <li>
+                    <a href="/allincidentslist" class="nav-link px-3">
+                     
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/whywhyanalysis" class="nav-link px-3">
+                     
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/specialanalysis" class="nav-link px-3">
+                      
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/finalinvestigationreport" class="nav-link px-3">
+                      
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+
+
+
+
+            <li>
+              <a href="/actionclosure" class="nav-link px-3 active">
+               
+              </a>
+            </li> 
+            <li>
+              <a href="/verifyactionclose" class="nav-link px-3 active">
+               
+              </a>
+            </li> 
+            <li>
+              <a href="/incidentenquiry" class="nav-link px-3 active">
+                
+              </a>
+            </li>  
+            {% endif %}
           </ul>
         </nav>
       </div>

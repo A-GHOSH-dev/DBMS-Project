@@ -20,7 +20,6 @@ urlpatterns = [
     path('allincidentslist', views.allincidentslist, name='allincidentslist'),
     path('whywhyanalysis', views.whywhyanalysis, name='whywhyanalysis'),
     path('specialanalysis', views.specialanalysis, name='specialanalysis'),
-    path('investigationreport', views.investigationreport, name='investigationreport'),
     path('finalinvestigationreport', views.finalinvestigationreport, name='finalinvestigationreport'),
     path('actionclosure', views.actionclosure, name='actionclosure'),
     path('verifyactionclose', views.verifyactionclose, name='verifyactionclose'),
