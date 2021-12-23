@@ -64,18 +64,14 @@ class WhyWhyAnalyzing(models.Model):
 
 #specialanalysis
 class SpecialAnalyzing(models.Model):
-    speinc_id=models.CharField(max_length=50)
-    speicua=models.CharField(max_length=500)
-    speicuc=models.CharField(max_length=500)
-    sperchf=models.CharField(max_length=500)
-    spercof=models.CharField(max_length=500)
-    icuao=models.CharField(max_length=500)
-    icuco=models.CharField(max_length=500)
-    rchfo=models.CharField(max_length=500)
-    rcofo=models.CharField(max_length=500)
+    spe_inc_id=models.CharField(max_length=50)
+    imm_cause_unsafe_ac=models.CharField(max_length=500)
+    imm_cause_unsafe_con=models.CharField(max_length=500)
+    root_cause_human_fac=models.CharField(max_length=500)
+    root_cause_org_fac=models.CharField(max_length=500)
 
     def __str__(self):
-        return self.speinc_id
+        return self.spe_inc_id
 #final report
 class FinalReport(models.Model):
     #speinc_id=models.CharField(max_length=50)
@@ -91,6 +87,7 @@ class FinalReport(models.Model):
     pa=models.CharField(max_length=500)   
     pap=models.CharField(max_length=500)
     pat=models.DateField(max_length=500)
+    intensity=models.CharField(max_length=500)
 
     def __str__(self):
         return self.reinc_id

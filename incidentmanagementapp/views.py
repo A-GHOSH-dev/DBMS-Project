@@ -181,9 +181,24 @@ def whywhyanalysis(request):
     #return render(request,"foodsordernow.html",{"Orders":adduserdata})
     return render(request,"whywhyanalysis.html")
 
+def specialanalysis(request):
+    if request.method=="POST":
+        spe_inc_id=request.POST['speinc_id']
+        imm_cause_unsafe_ac = request.POST['imm_cause_unsafe_ac']
+        imm_cause_unsafe_con = request.POST['imm_cause_unsafe_con']
+        root_cause_human_fac = request.POST['root_cause_human_fac']
+        root_cause_org_fac = request.POST['root_cause_org_fac']
 
+        specialanalysisdata = SpecialAnalyzing(spe_inc_id=spe_inc_id, imm_cause_unsafe_ac=imm_cause_unsafe_ac, imm_cause_unsafe_con=imm_cause_unsafe_con, root_cause_human_fac=root_cause_human_fac, root_cause_org_fac=root_cause_org_fac)  
 
+        specialanalysisdata.save()
+        messages.success(request, "Special Analysis Done")
 
+    
+        return redirect('finalinvestigationreport')
+
+    return render(request,"specialanalysis.html")
+'''
 def specialanalysis(request):
     #return HttpResponse("This is my home page")
     #return render(request, 'whywhyanalysis.html')
@@ -228,7 +243,7 @@ def specialanalysis(request):
     #return render(request,"foodsordernow.html",{"Orders":adduserdata})
     return render(request,"specialanalysis.html")
 
-
+'''
 def finalinvestigationreport(request):
     #return HttpResponse("This is my home page")
     #return render(request, 'whywhyanalysis.html')
@@ -245,8 +260,9 @@ def finalinvestigationreport(request):
         pa=request.POST['pa']
         pap=request.POST['pap']
         pat=request.POST['pat']
+        intensity = request.POST['intensity']
 
-        finalinvestigationreportdata = FinalReport(reinc_id=reinc_id, sum=sum, img=img, rca=rca, imc=imc, rtc=rtc, ca=ca, cap=cap, cad=cad, pa=pa, pap=pap, pat=pat)  
+        finalinvestigationreportdata = FinalReport(reinc_id=reinc_id, sum=sum, img=img, rca=rca, imc=imc, rtc=rtc, ca=ca, cap=cap, cad=cad, pa=pa, pap=pap, pat=pat, intensity=intensity)  
 
         finalinvestigationreportdata.save()
         messages.success(request, "Investigation report succesfully saved")

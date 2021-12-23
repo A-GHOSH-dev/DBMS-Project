@@ -1,0 +1,72 @@
+1. AddUser
+- addemp_id - Employee ID
+- addemail - Email address
+- addname - Name
+- addDepartment - Department
+- addsection - Section
+- addrole - Role of User
+- addtraining - Training Recieved or not for the Role (Yes/No)
+- addphone - Phone
+- addpassword1 - Password
+
+2. IncidentReporting
+- datereport - Date of Reporting
+- timereport - Time of Reporting
+- reportedby - Incident Reported By
+- dateincident - Date of Incident
+- timeincident - Time of Incident
+- locationincident - Location of Incident
+- incidentdesc - Incient Description
+- incidentaction - Immediate actions taken & Current Status
+- victimname - Name of Victim (if Any)
+- victimrole - Role of Victim (Employee/Contractor/Visitor/Others)
+- victimemp_id  Employee ID (if employee)
+- victimcon_id - Name of Contractor agency (if contractor)
+
+3. AssignInvestigator
+- incident_id - Incident ID
+- nameassignedinvestigator - Name of Investigator Assigned
+- emailassignedinvestigator - Email address of Investigator assigned
+
+4. WhyWhyAnalyzing
+- whyinc_id - Incident ID
+- ps - Problem Statements
+- why1 - Why 1
+- why2 - Why 2
+- why3 - Why 3
+- why4 - Why 4
+- why5 - Why 5
+- rc - Root causes
+
+5. SpecialAnalyzing
+- spe_inc_id - Incident ID
+- imm_cause_unsafe_ac - Immediate Causes (Unsafe Actions)
+- imm_cause_unsafe_con - Immediate Causes (Unsafe Conditions)
+- root_cause_human_fac - Root Causes (Human Factors)
+- root_cause_org_fac - Root Causes (Organizational Factors)
+
+6. FinalReport
+- reinc_id - Incident ID
+- sum - Summary of Incident
+- img - Image Upload
+- rca - RCA Tool used
+- imc - Immediate Causes
+- rtc - Root Causes
+- ca - Corrective action
+- cap - Corrective action responsible person
+- cad - Corrective action target date
+- pa - Preventive action 
+- pap - Preventive action responsible person
+- pat - Preventive action target date
+- intensity - Intensity/Level of Incident using Risk Matrix
+
+7. ActionClosure
+- actionclose_inc_id - Incident ID
+- actiondonebyname - action done by the person name
+- actiontaken - what are the actions taken
+- completiondate - action completion date
+
+8. VerifyActionClose
+- ver_action_close_inc_id - Incident ID
+- inc_closeoropen - Incident Status (Close/ Open)
+- remarks - Any Remarks
