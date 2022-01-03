@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
-from incidentmanagementapp.models import WhyWhyAnalyzing, AddUser, IncidentReporting, AssignInvestigator, SpecialAnalyzing, FinalReport
+from incidentmanagementapp.models import Whywhyanalyzing, Actionclosure, Verifyactionclose, Adduser, Incidentreporting, Assigninvestigator, Specialanalyzing, Finalreport
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -79,14 +79,14 @@ def adduser(request):
         addemp_id=request.POST['addemp_id']
         addemail=request.POST['addemail']
         addname=request.POST['addname']
-        addDepartment=request.POST['addDepartment']
+        adddepartment=request.POST['adddepartment']
         addsection=request.POST['addsection']
         addrole=request.POST['addrole']
         addtraining=request.POST['addemp_id']
         addphone=request.POST['addphone']
-        addpassword1=request.POST['addpassword1']
+        addpassword=request.POST['addpassword']
 
-        adduserdata = AddUser(addemp_id=addemp_id, addemail=addemail, addname=addname, addDepartment=addDepartment, addsection=addsection, addrole=addrole, addtraining=addtraining, addphone=addphone, addpassword1=addpassword1)  
+        adduserdata = Adduser(addemp_id=addemp_id, addemail=addemail, addname=addname, adddepartment=adddepartment, addsection=addsection, addrole=addrole, addtraining=addtraining, addphone=addphone, addpassword=addpassword)  
 
         adduserdata.save()
         messages.success(request, "User has been succesfully added")
@@ -119,7 +119,7 @@ def incidentreport(request):
         victimemp_id=request.POST['victimemp_id']
         victimcon_id=request.POST['victimcon_id']
 
-        incidentreportingdata = IncidentReporting(datereport=datereport, timereport=timereport, reportedby=reportedby, dateincident=dateincident, timeincident=timeincident, locationincident=locationincident, incidentdesc=incidentdesc, incidentaction=incidentaction, victimname=victimname, victimrole=victimrole, victimemp_id=victimemp_id, victimcon_id=victimcon_id)  
+        incidentreportingdata = Incidentreporting(datereport=datereport, timereport=timereport, reportedby=reportedby, dateincident=dateincident, timeincident=timeincident, locationincident=locationincident, incidentdesc=incidentdesc, incidentaction=incidentaction, victimname=victimname, victimrole=victimrole, victimemp_id=victimemp_id, victimcon_id=victimcon_id)  
 
         incidentreportingdata.save()
         messages.success(request, "Incident has been succesfully reported")
@@ -140,7 +140,7 @@ def assignleadinvestigator(request):
         nameassignedinvestigator=request.POST['nameassignedinvestigator']
         emailassignedinvestigator=request.POST['emailassignedinvestigator']
 
-        assignleadinvestigatorreport = AssignInvestigator(incident_id=incident_id, nameassignedinvestigator=nameassignedinvestigator, emailassignedinvestigator=emailassignedinvestigator)  
+        assignleadinvestigatorreport = Assigninvestigator(incident_id=incident_id, nameassignedinvestigator=nameassignedinvestigator, emailassignedinvestigator=emailassignedinvestigator)  
 
         assignleadinvestigatorreport.save()
         messages.success(request, "Lead investigator has been succesfully assigned")
@@ -167,7 +167,7 @@ def whywhyanalysis(request):
         why5=request.POST['why5']
         rc=request.POST['rc']
 
-        whywhyanalysisdata = WhyWhyAnalyzing(whyinc_id=whyinc_id, ps=ps, why1=why1, why2=why2, why3=why3, why4=why4, why5=why5, rc=rc)  
+        whywhyanalysisdata = Whywhyanalyzing(whyinc_id=whyinc_id, ps=ps, why1=why1, why2=why2, why3=why3, why4=why4, why5=why5, rc=rc)  
 
         whywhyanalysisdata.save()
         messages.success(request, "Why Why Analysis Done")
@@ -189,7 +189,7 @@ def specialanalysis(request):
         root_cause_human_fac = request.POST['root_cause_human_fac']
         root_cause_org_fac = request.POST['root_cause_org_fac']
 
-        specialanalysisdata = SpecialAnalyzing(spe_inc_id=spe_inc_id, imm_cause_unsafe_ac=imm_cause_unsafe_ac, imm_cause_unsafe_con=imm_cause_unsafe_con, root_cause_human_fac=root_cause_human_fac, root_cause_org_fac=root_cause_org_fac)  
+        specialanalysisdata = Specialanalyzing(spe_inc_id=spe_inc_id, imm_cause_unsafe_ac=imm_cause_unsafe_ac, imm_cause_unsafe_con=imm_cause_unsafe_con, root_cause_human_fac=root_cause_human_fac, root_cause_org_fac=root_cause_org_fac)  
 
         specialanalysisdata.save()
         messages.success(request, "Special Analysis Done")
@@ -262,7 +262,7 @@ def finalinvestigationreport(request):
         pat=request.POST['pat']
         intensity = request.POST['intensity']
 
-        finalinvestigationreportdata = FinalReport(reinc_id=reinc_id, sum=sum, img=img, rca=rca, imc=imc, rtc=rtc, ca=ca, cap=cap, cad=cad, pa=pa, pap=pap, pat=pat, intensity=intensity)  
+        finalinvestigationreportdata = Finalreport(reinc_id=reinc_id, sum=sum, img=img, rca=rca, imc=imc, rtc=rtc, ca=ca, cap=cap, cad=cad, pa=pa, pap=pap, pat=pat, intensity=intensity)  
 
         finalinvestigationreportdata.save()
         messages.success(request, "Investigation report succesfully saved")

@@ -27,11 +27,4 @@ urlpatterns = [
     #path('payment', views.payment, name='payment')
 
 
-
-
-    
-
-
-    
 ]
-
