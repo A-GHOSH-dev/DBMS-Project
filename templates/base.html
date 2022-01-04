@@ -13,6 +13,20 @@
     />
     <link rel="stylesheet" href="{% static 'css/dataTables.bootstrap5.min.css' %}" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+
+
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+
+
+
+
     <title>Incident Mangement Software</title>
   </head>
   <body>
@@ -127,11 +141,18 @@
               </a>
             </li> 
             
-
+            <li>
+              <a href="/allincidentslist" class="nav-link px-3 active">
+                <span class="me-2"
+                  ><i class="bi bi-speedometer2"></i
+                ></span>
+                <span>All Incidents</span>
+              </a>
+            </li>
 
             <li>
               <a
-                class="nav-link px-3 sidebar-link"
+                class="nav-link px-3 sidebar-link active"
                 data-bs-toggle="collapse"
                 href="#layouts"
               >
@@ -145,14 +166,7 @@
               </a>
               <div class="collapse" id="layouts">
                 <ul class="navbar-nav ps-3">
-                  <li>
-                    <a href="/allincidentslist" class="nav-link px-3">
-                      <span class="me-2"
-                        ><i class="bi bi-speedometer2"></i
-                      ></span>
-                      <span>All Incidents</span>
-                    </a>
-                  </li>
+  
                   <li>
                     <a href="/whywhyanalysis" class="nav-link px-3">
                       <span class="me-2"
@@ -306,5 +320,15 @@
     <script src="{% static './js/jquery.dataTables.min.js' %}"></script>
     <script src="{% static './js/dataTables.bootstrap5.min.js' %}"></script>
     <script src="{% static './js/script.js' %}"></script>
+
+
+    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/js/popper.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
+  
+
+
+
   </body>
 </html>

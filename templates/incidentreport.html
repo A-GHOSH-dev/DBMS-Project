@@ -7,8 +7,14 @@
       {% for msg in messages %}
       {{msg}}
       {% endfor %}
+      <h4 class="text-center"><em>Total: {{incidentreportingorder|length}}</em></h4> 
       <form action="/incidentreport" method="POST">
         {% csrf_token %}
+        <div class="mb-3">
+          <label for="reportingincident_id" class="form-label">Incident ID</label>
+          <input type="date" class="form-control" name="reportingincident_id" id="reportingincident_id">
+          
+        </div>
     <div class="mb-3">
         <label for="datereport" class="form-label">Date of Reporting</label>
         <input type="date" class="form-control" name="datereport" id="datereport">

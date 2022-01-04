@@ -9,18 +9,18 @@ def index(request):
     #return HttpResponse("This is my home page")
     return render(request, 'index.html')
 def allincidentslist(request):
+    assigninvestigatororder = Assigninvestigator.objects.all()
+    incidentreportingorder = Incidentreporting.objects.all()
     #return HttpResponse("This is my home page")
-    return render(request, 'allincidentslist.html')
-
-def actionclosure(request):
-    #return HttpResponse("This is my home page")
-    return render(request, 'actionclosure.html') 
-def verifyactionclose(request):
-    #return HttpResponse("This is my home page")
-    return render(request, 'verifyactionclose.html') 
+    #return render(request, 'allincidentslist.html')
+    return render(request,"allincidentslist.html",{"assigninvestigatororder":assigninvestigatororder, "incidentreportingorder":incidentreportingorder})
 def incidentenquiry(request):
+    incidentreportingorder = Incidentreporting.objects.all()
+    finalreportorder = Finalreport.objects.all()
+    verifyactionorder = Verifyactionclose.objects.all()
+    return render(request,"incidentenquiry.html",{"incidentreportingorder":incidentreportingorder, "finalreportorder":finalreportorder, "verifyactionorder":verifyactionorder})
     #return HttpResponse("This is my home page")
-    return render(request, 'incidentenquiry.html') 
+    #return render(request, 'incidentenquiry.html') 
 
 
 def handleSignup(request):
@@ -103,15 +103,17 @@ def adduser(request):
 
 
 def incidentreport(request):
+    incidentreportingorder = Incidentreporting.objects.all()
     #return HttpResponse("This is my home page")
     #return render(request, 'incidentreport.html')
     if request.method=="POST":
+        reportingincident_id=request.POST['reportingincident_id']
         datereport=request.POST['datereport']
         timereport=request.POST['timereport']
         reportedby=request.POST['reportedby']
-        dateincident=request.POST['dateincident']
+        dateincident=request.POST['dateincident'] #this
         timeincident=request.POST['timeincident']
-        locationincident=request.POST['locationincident']
+        locationincident=request.POST['locationincident'] #this
         incidentdesc=request.POST['incidentdesc']
         incidentaction=request.POST['incidentaction']
         victimname=request.POST['victimname']
@@ -119,7 +121,7 @@ def incidentreport(request):
         victimemp_id=request.POST['victimemp_id']
         victimcon_id=request.POST['victimcon_id']
 
-        incidentreportingdata = Incidentreporting(datereport=datereport, timereport=timereport, reportedby=reportedby, dateincident=dateincident, timeincident=timeincident, locationincident=locationincident, incidentdesc=incidentdesc, incidentaction=incidentaction, victimname=victimname, victimrole=victimrole, victimemp_id=victimemp_id, victimcon_id=victimcon_id)  
+        incidentreportingdata = Incidentreporting(reportingincident_id=reportingincident_id, datereport=datereport, timereport=timereport, reportedby=reportedby, dateincident=dateincident, timeincident=timeincident, locationincident=locationincident, incidentdesc=incidentdesc, incidentaction=incidentaction, victimname=victimname, victimrole=victimrole, victimemp_id=victimemp_id, victimcon_id=victimcon_id)  
 
         incidentreportingdata.save()
         messages.success(request, "Incident has been succesfully reported")
@@ -128,11 +130,14 @@ def incidentreport(request):
         
         
     #return render(request,"foodsordernow.html",{"Orders":adduserdata})
-    return render(request,"incidentreport.html")
+    #return render(request,"incidentreport.html")
+    return render(request,"incidentreport.html",{"Orders":incidentreportingorder, "incidentreportingorder":incidentreportingorder})
+    
 
 
 
 def assignleadinvestigator(request):
+    assigninvestigatororder = Assigninvestigator.objects.all()
     #return HttpResponse("This is my home page")
     #return render(request, 'assignleadinvestigator.html')
     if request.method=="POST":
@@ -149,7 +154,8 @@ def assignleadinvestigator(request):
         
         
     #return render(request,"foodsordernow.html",{"Orders":adduserdata})
-    return render(request,"assignleadinvestigator.html")
+    #return render(request,"assignleadinvestigator.html")
+    return render(request,"assignleadinvestigator.html",{"Aincident":assigninvestigatororder})
 
 
 
@@ -183,7 +189,7 @@ def whywhyanalysis(request):
 
 def specialanalysis(request):
     if request.method=="POST":
-        spe_inc_id=request.POST['speinc_id']
+        spe_inc_id =request.POST['spe_inc_id']
         imm_cause_unsafe_ac = request.POST['imm_cause_unsafe_ac']
         imm_cause_unsafe_con = request.POST['imm_cause_unsafe_con']
         root_cause_human_fac = request.POST['root_cause_human_fac']
@@ -245,12 +251,13 @@ def specialanalysis(request):
 
 '''
 def finalinvestigationreport(request):
+    finalreportorder = Finalreport.objects.all()
     #return HttpResponse("This is my home page")
     #return render(request, 'whywhyanalysis.html')
     if request.method=="POST":
-        reinc_id=request.POST['reinc_id']
-        sum=request.POST['sum']
-        img=request.POST['img']
+        reinc_id=request.POST['reinc_id'] #this
+        summary=request.POST['summary'] #this
+        #img=request.POST['img']
         rca=request.POST['rca']
         imc=request.POST['imc']
         rtc=request.POST['rtc']
@@ -260,9 +267,9 @@ def finalinvestigationreport(request):
         pa=request.POST['pa']
         pap=request.POST['pap']
         pat=request.POST['pat']
-        intensity = request.POST['intensity']
+        intensity = request.POST['intensity'] #this
 
-        finalinvestigationreportdata = Finalreport(reinc_id=reinc_id, sum=sum, img=img, rca=rca, imc=imc, rtc=rtc, ca=ca, cap=cap, cad=cad, pa=pa, pap=pap, pat=pat, intensity=intensity)  
+        finalinvestigationreportdata = Finalreport(reinc_id=reinc_id, summary=summary, rca=rca, imc=imc, rtc=rtc, ca=ca, cap=cap, cad=cad, pa=pa, pap=pap, pat=pat, intensity=intensity)  
 
         finalinvestigationreportdata.save()
         messages.success(request, "Investigation report succesfully saved")
@@ -272,4 +279,51 @@ def finalinvestigationreport(request):
         
         
     #return render(request,"foodsordernow.html",{"Orders":adduserdata})
-    return render(request,"finalinvestigationreport.html")
+    #return render(request,"finalinvestigationreport.html")
+    return render(request,"finalinvestigationreport.html",{"Forders":finalreportorder})
+
+
+def actionclosure(request):
+    #return HttpResponse("This is my home page")
+    #return render(request, 'whywhyanalysis.html')
+    if request.method=="POST":
+        actionclose_inc_id=request.POST['actionclose_inc_id']
+        actiondonebyname=request.POST['actiondonebyname']
+        actiontaken=request.POST['actiontaken']
+        completiondate=request.POST['completiondate']
+
+        actionclosuredata = Actionclosure(actionclose_inc_id=actionclose_inc_id, actiondonebyname=actiondonebyname, actiontaken=actiontaken, completiondate=completiondate)  
+
+        actionclosuredata.save()
+        messages.success(request, "Action Closure succesfully saved")
+
+        #return redirect('payment')
+        #return render(request,"foodsordernow.html",{"Orders":farmerbuyorder})
+        
+        
+    #return render(request,"foodsordernow.html",{"Orders":adduserdata})
+    return render(request,"actionclosure.html")
+
+
+def verifyactionclose(request):
+    verifyactionorder = Verifyactionclose.objects.all()
+    #return HttpResponse("This is my home page")
+    #return render(request, 'whywhyanalysis.html')
+    if request.method=="POST":
+        ver_action_close_inc_id=request.POST['ver_action_close_inc_id'] #this
+        inc_closeoropen=request.POST['inc_closeoropen']
+        remarks=request.POST['remarks']
+
+        verifyactionclosedata = Verifyactionclose(ver_action_close_inc_id=ver_action_close_inc_id, inc_closeoropen=inc_closeoropen, remarks=remarks)  
+
+        verifyactionclosedata.save()
+        messages.success(request, "Incident Closure succesfully saved")
+
+        #return redirect('payment')
+        #return render(request,"foodsordernow.html",{"Orders":farmerbuyorder})
+        
+        
+    #return render(request,"foodsordernow.html",{"Orders":adduserdata})
+    #return render(request,"verifyactionclose.html")
+    return render(request,"verifyactionclose.html",{"Vorders":verifyactionorder})
+

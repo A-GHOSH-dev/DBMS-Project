@@ -9,7 +9,7 @@ from django.db import models
 
 
 class Actionclosure(models.Model):
-    actionclose_inc = models.OneToOneField('Assigninvestigator', models.DO_NOTHING, primary_key=True)
+    actionclose_inc = models.OneToOneField('Incidentreporting', models.DO_NOTHING, primary_key=True)
     actiondonebyname = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
     actiontaken = models.CharField(max_length=1000, db_collation='SQL_Latin1_General_CP1_CI_AS')
     completiondate = models.DateField()
@@ -36,7 +36,7 @@ class Adduser(models.Model):
 
 
 class Assigninvestigator(models.Model):
-    incident_id = models.IntegerField(primary_key=True)
+    incident = models.OneToOneField('Incidentreporting', models.DO_NOTHING, primary_key=True)
     nameassignedinvestigator = models.CharField(max_length=50, db_collation='SQL_Latin1_General_CP1_CI_AS')
     emailassignedinvestigator = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
 
@@ -160,7 +160,7 @@ class DjangoSession(models.Model):
 
 
 class Finalreport(models.Model):
-    reinc = models.OneToOneField(Assigninvestigator, models.DO_NOTHING, primary_key=True)
+    reinc = models.OneToOneField('Incidentreporting', models.DO_NOTHING, primary_key=True)
     inc_type = models.CharField(max_length=200, db_collation='SQL_Latin1_General_CP1_CI_AS')
     summary = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
     img = models.BinaryField()
@@ -181,6 +181,7 @@ class Finalreport(models.Model):
 
 
 class Incidentreporting(models.Model):
+    reportingincident_id = models.IntegerField(primary_key=True)
     datereport = models.DateField()
     timereport = models.TimeField()
     reportedby = models.CharField(max_length=50, db_collation='SQL_Latin1_General_CP1_CI_AS')
@@ -191,7 +192,7 @@ class Incidentreporting(models.Model):
     incidentaction = models.CharField(max_length=1000, db_collation='SQL_Latin1_General_CP1_CI_AS')
     victimname = models.CharField(max_length=50, db_collation='SQL_Latin1_General_CP1_CI_AS')
     victimrole = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
-    victimemp_id = models.IntegerField(primary_key=True)
+    victimemp_id = models.IntegerField()
     victimcon_id = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
     assign_inv_email = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
 
@@ -201,7 +202,7 @@ class Incidentreporting(models.Model):
 
 
 class Specialanalyzing(models.Model):
-    spe_inc = models.OneToOneField(Assigninvestigator, models.DO_NOTHING, primary_key=True)
+    spe_inc = models.OneToOneField(Incidentreporting, models.DO_NOTHING, primary_key=True)
     imm_cause_unsafe_ac = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
     imm_cause_unsafe_con = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
     root_cause_human_fac = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
@@ -213,7 +214,7 @@ class Specialanalyzing(models.Model):
 
 
 class Verifyactionclose(models.Model):
-    ver_action_close_inc = models.OneToOneField(Assigninvestigator, models.DO_NOTHING, primary_key=True)
+    ver_action_close_inc = models.OneToOneField(Incidentreporting, models.DO_NOTHING, primary_key=True)
     inc_closeoropen = models.CharField(max_length=10, db_collation='SQL_Latin1_General_CP1_CI_AS')
     remarks = models.CharField(max_length=500, db_collation='SQL_Latin1_General_CP1_CI_AS')
 
@@ -223,7 +224,7 @@ class Verifyactionclose(models.Model):
 
 
 class Whywhyanalyzing(models.Model):
-    whyinc = models.OneToOneField(Assigninvestigator, models.DO_NOTHING, primary_key=True)
+    whyinc = models.OneToOneField(Incidentreporting, models.DO_NOTHING, primary_key=True)
     ps = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
     why1 = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
     why2 = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
