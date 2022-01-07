@@ -24,6 +24,7 @@ urlpatterns = [
     path('actionclosure', views.actionclosure, name='actionclosure'),
     path('verifyactionclose', views.verifyactionclose, name='verifyactionclose'),
     path('incidentenquiry', views.incidentenquiry, name='incidentenquiry'),
+    path('profilepage', views.profilepage, name='profilepage'),
     #path('payment', views.payment, name='payment')
 
 

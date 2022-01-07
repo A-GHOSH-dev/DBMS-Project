@@ -12,7 +12,7 @@
         {% csrf_token %}
         <div class="mb-3">
           <label for="reportingincident_id" class="form-label">Incident ID</label>
-          <input type="date" class="form-control" name="reportingincident_id" id="reportingincident_id">
+          <input type="text" class="form-control" name="reportingincident_id" id="reportingincident_id">
           
         </div>
     <div class="mb-3">
@@ -74,6 +74,11 @@
       <div class="mb-3">
         <label for="victimcon_id" class="form-label">Name of Contractor agency (if contractor)</label>
         <input type="text" class="form-control" name="victimcon_id" id="victimcon_id">
+       
+      </div>
+      <div class="mb-3">
+        <label for="assign_inv_email" class="form-label">Assigner Email</label>
+        <input type="email" class="form-control" name="assign_inv_email" id="assign_inv_email">
        
       </div>
 

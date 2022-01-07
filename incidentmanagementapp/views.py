@@ -3,6 +3,12 @@ from incidentmanagementapp.models import Whywhyanalyzing, Actionclosure, Verifya
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.core.mail import EmailMessage, send_mail
+from django.conf import settings
+from django.template.loader import render_to_string
+
+
+from incidentmanagementsoftware.settings import EMAIL_HOST_PASSWORD, EMAIL_HOST_USER
 
 # Create your views here.
 def index(request):
@@ -23,7 +29,10 @@ def incidentenquiry(request):
     #return render(request, 'incidentenquiry.html') 
 
 
-def handleSignup(request):
+
+
+
+def handleSignup(request): #adduser
     if request.method=='GET':
         return render(request, 'signup.html')
     if request.method=='POST':
@@ -33,11 +42,14 @@ def handleSignup(request):
         name=request.POST['name']  
         Department=request.POST['Department']
         FactoryNumber=request.POST['FactoryNumber']
+        role_of_user=request.POST['role_of_user']
+        user_designation=request.POST['user_designation']
         phone=request.POST['phone']
+        user_training=request.POST['user_training']
         password1=request.POST['password1']
         password2=request.POST['password2']
 
-        myuser = User.objects.create_user(emp_id, email, password1)
+        myuser = User.objects.create_user(emp_id, email, password1, Department, FactoryNumber, role_of_user, user_designation, phone, user_training)
         myuser.person_name=name
         myuser.save()
         messages.success(request, "Your account has been successfully created")
@@ -70,33 +82,61 @@ def handleLogout(request):
     messages.success(request, "Successfully Logged Out")
     return redirect('/')
 
+'''def profilepage(request):
+    if request.user.is_authenticated:
+        emp_id=request.user.emp_id
+        email=request.user.email
+        name=request.user.name
+        Department=request.user.Departmente
+        FactoryNumber=request.user.FactoryNumber
+        role_of_user=request.user.role_of_user
+        user_designation=request.user.user_designation
+        phone=request.user.phone
+        user_training=request.user.user_training
+        password1=request.user.password1
+        return render(request, 'profilepage.html')
+    else:
+        return redirect('handleLogin')
+
+    #return render(request, 'profilepage.html')'''
 
 
-def adduser(request):
+def profilepage(request):
+    adduserorder = Adduser.objects.all()
+    return render(request,"profilepage.html",{"adduserorder":adduserorder})
+
+def adduser(request):#createprofile
+    adduserorder = Adduser.objects.all()
     #return HttpResponse("This is my home page")
     #return render(request, 'adduser.html')
     if request.method=="POST":
+
         addemp_id=request.POST['addemp_id']
         addemail=request.POST['addemail']
         addname=request.POST['addname']
         adddepartment=request.POST['adddepartment']
         addsection=request.POST['addsection']
+        designation=request.POST['designation']
         addrole=request.POST['addrole']
-        addtraining=request.POST['addemp_id']
+        addtraining=request.POST['addtraining']
         addphone=request.POST['addphone']
         addpassword=request.POST['addpassword']
 
-        adduserdata = Adduser(addemp_id=addemp_id, addemail=addemail, addname=addname, adddepartment=adddepartment, addsection=addsection, addrole=addrole, addtraining=addtraining, addphone=addphone, addpassword=addpassword)  
+        adduserdata = Adduser(addemp_id=addemp_id, addemail=addemail, addname=addname, adddepartment=adddepartment, addsection=addsection, designation=designation, addrole=addrole, addtraining=addtraining, addphone=addphone, addpassword=addpassword)  
 
         adduserdata.save()
-        messages.success(request, "User has been succesfully added")
+        
+        messages.success(request, "User Profile has been succesfully created")
 
-        #return redirect('payment')
+        return redirect('profilepage')
         #return render(request,"foodsordernow.html",{"Orders":farmerbuyorder})
         
         
     #return render(request,"foodsordernow.html",{"Orders":adduserdata})
-    return render(request,"adduser.html")
+    #return render(request,"adduser.html")
+    return render(request,"adduser.html",{"Us":adduserorder})
+
+
 
 
 
@@ -120,11 +160,29 @@ def incidentreport(request):
         victimrole=request.POST['victimrole']
         victimemp_id=request.POST['victimemp_id']
         victimcon_id=request.POST['victimcon_id']
+        assign_inv_email=request.POST['assign_inv_email']
 
-        incidentreportingdata = Incidentreporting(reportingincident_id=reportingincident_id, datereport=datereport, timereport=timereport, reportedby=reportedby, dateincident=dateincident, timeincident=timeincident, locationincident=locationincident, incidentdesc=incidentdesc, incidentaction=incidentaction, victimname=victimname, victimrole=victimrole, victimemp_id=victimemp_id, victimcon_id=victimcon_id)  
+        incidentreportingdata = Incidentreporting(reportingincident_id=reportingincident_id, datereport=datereport, timereport=timereport, reportedby=reportedby, dateincident=dateincident, timeincident=timeincident, locationincident=locationincident, incidentdesc=incidentdesc, incidentaction=incidentaction, victimname=victimname, victimrole=victimrole, victimemp_id=victimemp_id, victimcon_id=victimcon_id, assign_inv_email=assign_inv_email)  
 
         incidentreportingdata.save()
         messages.success(request, "Incident has been succesfully reported")
+
+        to = request.POST.get('assign_inv_email')
+        content = request.POST.get('reportingincident_id')
+        print(to, content)
+        send_mail(
+            'Incient Reported',
+            content +' has been reported',
+            settings.EMAIL_HOST_USER,
+            [to]
+        )
+        return render(
+            request,
+            'incidentreport.html',
+            {
+                'title':'send an email'
+            }
+        )
         #return redirect('payment')
         #return render(request,"foodsordernow.html",{"Orders":farmerbuyorder})
         
@@ -151,7 +209,15 @@ def assignleadinvestigator(request):
         messages.success(request, "Lead investigator has been succesfully assigned")
         #return redirect('payment')
         #return render(request,"foodsordernow.html",{"Orders":farmerbuyorder})
-        
+        toinv = request.POST.get('emailassignedinvestigator')
+        contentinv = request.POST.get('incident_id')
+        print(toinv, contentinv)
+        send_mail(
+            'Incident Reported',
+            'Incident with ID '+ contentinv +' has been assigned to you',
+            settings.EMAIL_HOST_USER,
+            [toinv]
+        )
         
     #return render(request,"foodsordernow.html",{"Orders":adduserdata})
     #return render(request,"assignleadinvestigator.html")
@@ -256,7 +322,8 @@ def finalinvestigationreport(request):
     #return render(request, 'whywhyanalysis.html')
     if request.method=="POST":
         reinc_id=request.POST['reinc_id'] #this
-        summary=request.POST['summary'] #this
+        reinc_type=request.POST['reinc_type'] #this
+        summary=request.POST['summary']
         #img=request.POST['img']
         rca=request.POST['rca']
         imc=request.POST['imc']
@@ -269,13 +336,27 @@ def finalinvestigationreport(request):
         pat=request.POST['pat']
         intensity = request.POST['intensity'] #this
 
-        finalinvestigationreportdata = Finalreport(reinc_id=reinc_id, summary=summary, rca=rca, imc=imc, rtc=rtc, ca=ca, cap=cap, cad=cad, pa=pa, pap=pap, pat=pat, intensity=intensity)  
+        finalinvestigationreportdata = Finalreport(reinc_id=reinc_id, reinc_type=reinc_type, summary=summary, rca=rca, imc=imc, rtc=rtc, ca=ca, cap=cap, cad=cad, pa=pa, pap=pap, pat=pat, intensity=intensity)  
 
         finalinvestigationreportdata.save()
         messages.success(request, "Investigation report succesfully saved")
 
         #return redirect('payment')
         #return render(request,"foodsordernow.html",{"Orders":farmerbuyorder})
+        toact = request.POST.get('cap')
+        toactp = request.POST.get('pap')
+        contentact = request.POST.get('incident_id')
+        caact = request.POST.get('ca')
+        caactd = request.POST.get('cad')
+        paact = request.POST.get('pa')
+        paactd = request.POST.get('pat')
+        print(toact, toactp, contentact)
+        send_mail(
+            'Incident Reported',
+            'Incident with ID '+ contentact +' has been reported and investigated and corrective action' + caact + 'has been assigned to' + cap + 'with deadline' + caactd +'. Preventive action'+ paact + 'with deadline' + paactd+ 'has been assigned to' + pap,
+            settings.EMAIL_HOST_USER,
+            [toact, toactp]
+        )
         
         
     #return render(request,"foodsordernow.html",{"Orders":adduserdata})
@@ -291,16 +372,28 @@ def actionclosure(request):
         actiondonebyname=request.POST['actiondonebyname']
         actiontaken=request.POST['actiontaken']
         completiondate=request.POST['completiondate']
+        verify_email=request.POST['verify_email']
 
-        actionclosuredata = Actionclosure(actionclose_inc_id=actionclose_inc_id, actiondonebyname=actiondonebyname, actiontaken=actiontaken, completiondate=completiondate)  
+        actionclosuredata = Actionclosure(actionclose_inc_id=actionclose_inc_id, actiondonebyname=actiondonebyname, actiontaken=actiontaken, completiondate=completiondate, verify_email=verify_email)  
 
         actionclosuredata.save()
         messages.success(request, "Action Closure succesfully saved")
 
         #return redirect('payment')
         #return render(request,"foodsordernow.html",{"Orders":farmerbuyorder})
+        tover = request.POST.get('verify_email')
+        conver = request.POST.get('actionclose_inc_id')
+        conver1 = request.POST.get('actiontaken')
+        conver2 = request.POST.get('actiondonebyname')
+        conver3 = request.POST.get('completiondate')
+        send_mail(
+            'Incident Reported',
+            'Incident with ID '+ conver +' has been reported and investigated and corrective & Preventive action has been assigned and completed. Action -'+ conver1 + 'has been completed by' + conver2 + 'by' + conver3,
+            settings.EMAIL_HOST_USER,
+            [tover]
+        )
         
-        
+
     #return render(request,"foodsordernow.html",{"Orders":adduserdata})
     return render(request,"actionclosure.html")
 
@@ -313,17 +406,28 @@ def verifyactionclose(request):
         ver_action_close_inc_id=request.POST['ver_action_close_inc_id'] #this
         inc_closeoropen=request.POST['inc_closeoropen']
         remarks=request.POST['remarks']
+        assigner_mail_final=request.POST['assigner_mail_final']
 
-        verifyactionclosedata = Verifyactionclose(ver_action_close_inc_id=ver_action_close_inc_id, inc_closeoropen=inc_closeoropen, remarks=remarks)  
+        verifyactionclosedata = Verifyactionclose(ver_action_close_inc_id=ver_action_close_inc_id, inc_closeoropen=inc_closeoropen, remarks=remarks, assigner_mail_final=assigner_mail_final)  
 
         verifyactionclosedata.save()
         messages.success(request, "Incident Closure succesfully saved")
 
         #return redirect('payment')
         #return render(request,"foodsordernow.html",{"Orders":farmerbuyorder})
-        
+        toassign = request.POST.get('assigner_mail_final')
+        conver11 = request.POST.get('ver_action_close_inc_id')
+        conver22 = request.POST.get('inc_closeoropen')
+        conver33 = request.POST.get('remarks')
+        send_mail(
+            'Incident Reported',
+            'Incident with ID '+ conver11 +' has been reported and investigated and corrective & Preventive action has been completed an Verifier has verified them. Status -'+ conver22 + ', Remarks -' + conver33,
+            settings.EMAIL_HOST_USER,
+            [toassign]
+        )
         
     #return render(request,"foodsordernow.html",{"Orders":adduserdata})
     #return render(request,"verifyactionclose.html")
     return render(request,"verifyactionclose.html",{"Vorders":verifyactionorder})
+
 

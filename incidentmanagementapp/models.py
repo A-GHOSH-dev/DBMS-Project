@@ -13,6 +13,7 @@ class Actionclosure(models.Model):
     actiondonebyname = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
     actiontaken = models.CharField(max_length=1000, db_collation='SQL_Latin1_General_CP1_CI_AS')
     completiondate = models.DateField()
+    verify_email = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
 
     class Meta:
         managed = False
@@ -26,6 +27,7 @@ class Adduser(models.Model):
     adddepartment = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
     addsection = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
     addrole = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
+    designation = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
     addtraining = models.CharField(max_length=25, db_collation='SQL_Latin1_General_CP1_CI_AS')
     addphone = models.DecimalField(max_digits=15, decimal_places=0)
     addpassword = models.CharField(max_length=25, db_collation='SQL_Latin1_General_CP1_CI_AS')
@@ -161,9 +163,8 @@ class DjangoSession(models.Model):
 
 class Finalreport(models.Model):
     reinc = models.OneToOneField('Incidentreporting', models.DO_NOTHING, primary_key=True)
-    inc_type = models.CharField(max_length=200, db_collation='SQL_Latin1_General_CP1_CI_AS')
+    reinc_type = models.CharField(max_length=200, db_collation='SQL_Latin1_General_CP1_CI_AS')
     summary = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
-    img = models.BinaryField()
     rca = models.CharField(max_length=50, db_collation='SQL_Latin1_General_CP1_CI_AS')
     imc = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
     rtc = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
@@ -217,6 +218,7 @@ class Verifyactionclose(models.Model):
     ver_action_close_inc = models.OneToOneField(Incidentreporting, models.DO_NOTHING, primary_key=True)
     inc_closeoropen = models.CharField(max_length=10, db_collation='SQL_Latin1_General_CP1_CI_AS')
     remarks = models.CharField(max_length=500, db_collation='SQL_Latin1_General_CP1_CI_AS')
+    assigner_mail_final = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
 
     class Meta:
         managed = False
