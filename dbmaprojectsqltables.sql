@@ -60,6 +60,15 @@ create table finalreport(
 reinc_id int primary key, --Incident ID
 reinc_type varchar(200) not null, -- Incident Type
 summary varchar(100) not null, --Summary of Incident
+inv_name varchar(100) not null,
+inv_id varchar(100) not null,
+re_date varchar(100) not null,
+re_time varchar(100) not null,
+re_loc varchar(100) not null,
+inv_vic_name varchar(200) not null,
+injuries varchar(100) not null,
+fatalities varchar(100) not null,
+vic_fat_desc varchar(100) not null,
 rca varchar(50) not null, --RCA Tool used
 imc varchar(100) not null, --Immediate Causes
 rtc varchar(100) not null, --Root Causes
@@ -69,6 +78,7 @@ cad varchar(100) not null, --Corrective action target date
 pa varchar(200) not null, --Preventive action 
 pap varchar(200) not null,--Preventive action responsible person
 pat varchar(200) not null, --Preventive action target date
+ma varchar(100) not null,
 intensity int not null, --Intensity/Level of Incident using Risk Matrix
 constraint fk_report foreign key(reinc_id) references incidentreporting(reportingincident_id));
 
@@ -102,4 +112,7 @@ select * from incidentreporting
 select * from assigninvestigator
 select * from whywhyanalyzing
 select * from specialanalyzing
+select * from finalreport
+select * from actionclosure
+select * from verifyactionclose
 

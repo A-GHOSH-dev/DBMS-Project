@@ -165,6 +165,15 @@ class Finalreport(models.Model):
     reinc = models.OneToOneField('Incidentreporting', models.DO_NOTHING, primary_key=True)
     reinc_type = models.CharField(max_length=200, db_collation='SQL_Latin1_General_CP1_CI_AS')
     summary = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
+    inv_name = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
+    inv_id = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
+    re_date = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
+    re_time = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
+    re_loc = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
+    inv_vic_name = models.CharField(max_length=200, db_collation='SQL_Latin1_General_CP1_CI_AS')
+    injuries = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
+    fatalities = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
+    vic_fat_desc = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
     rca = models.CharField(max_length=50, db_collation='SQL_Latin1_General_CP1_CI_AS')
     imc = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
     rtc = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
@@ -174,6 +183,7 @@ class Finalreport(models.Model):
     pa = models.CharField(max_length=200, db_collation='SQL_Latin1_General_CP1_CI_AS')
     pap = models.CharField(max_length=200, db_collation='SQL_Latin1_General_CP1_CI_AS')
     pat = models.CharField(max_length=200, db_collation='SQL_Latin1_General_CP1_CI_AS')
+    ma = models.CharField(max_length=100, db_collation='SQL_Latin1_General_CP1_CI_AS')
     intensity = models.IntegerField()
 
     class Meta:

@@ -23,9 +23,11 @@
 					      </tr>
 					    </thead>
 					    <tbody>
+							    {% for vorders in verifyactionorder %}
+								{% for forders in finalreportorder %}
                 {% for orders in incidentreportingorder %}
-                {% for forders in finalreportorder %}
-                {% for vorders in verifyactionorder %}
+                
+            
 					      <tr>
 					        <th scope="row" class="scope" >{{forders.reinc_id}}</th>
 					        <td>{{orders.dateincident}}</td>
@@ -33,7 +35,7 @@
 					        <td>{{orders.locationincident}}</td>
 					        <td>{{forders.intensity}}</td>
 					        <td>{{vorders.inc_closeoropen}}</td>
-					        <td><a href="#" class="btn btn-primary">Report</a></td>
+					        <td><a href="finalreportpdf/{{forders.reinc_id}}" class="btn btn-primary">Report</a></td>
 					      </tr>
 					      {% endfor %}
                 {% endfor %}

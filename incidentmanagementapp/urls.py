@@ -9,6 +9,11 @@ admin.site.index_title="Welcome to my portal"
 urlpatterns = [
     
     path('', views.index, name='index'),
+    path('dashboard', views.dashboard, name='dashboard'),
+    path('low', views.low, name='low'),
+    path('high', views.high, name='high'),
+    path('moderate', views.moderate, name='moderate'),
+    path('extreme', views.extreme, name='extreme'),
     #path('home', views.home, name='home'),
    # path('signup', views.signup, name='signup'),
     path('signup', views.handleSignup, name='handleSignup'),
@@ -25,6 +30,8 @@ urlpatterns = [
     path('verifyactionclose', views.verifyactionclose, name='verifyactionclose'),
     path('incidentenquiry', views.incidentenquiry, name='incidentenquiry'),
     path('profilepage', views.profilepage, name='profilepage'),
+    path('actionandreport', views.actionandreport, name='actionandreport'),
+    path('finalreportpdf/<str:pk>', views.finalreportpdf, name='finalreportpdf'),
     #path('payment', views.payment, name='payment')
 
 

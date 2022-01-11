@@ -28,8 +28,9 @@
 					      </tr>
 					    </thead>
 					    <tbody>
+							{% for aincident in assigninvestigatororder %}
                 {% for incident in incidentreportingorder %}
-                {% for aincident in assigninvestigatororder %}
+               
                 
 					      <tr>
 					        <th scope="row" class="scope" class="w-10">{{incident.reportingincident_id}}</th>

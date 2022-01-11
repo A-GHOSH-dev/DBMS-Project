@@ -14,6 +14,22 @@ from incidentmanagementsoftware.settings import EMAIL_HOST_PASSWORD, EMAIL_HOST_
 def index(request):
     #return HttpResponse("This is my home page")
     return render(request, 'index.html')
+
+
+
+
+def dashboard(request):
+    finalreportorder = Finalreport.objects.all()
+
+    #return HttpResponse("This is my home page")
+    return render(request, 'dashboard.html', {'finalreportorder':finalreportorder})
+
+
+
+
+
+
+
 def allincidentslist(request):
     assigninvestigatororder = Assigninvestigator.objects.all()
     incidentreportingorder = Incidentreporting.objects.all()
@@ -37,25 +53,44 @@ def handleSignup(request): #adduser
         return render(request, 'signup.html')
     if request.method=='POST':
         #Get parameters posted
-        emp_id=request.POST['emp_id']
+        username=request.POST['emp_id']
         email=request.POST['email']
         name=request.POST['name']  
         Department=request.POST['Department']
         FactoryNumber=request.POST['FactoryNumber']
-        role_of_user=request.POST['role_of_user']
+        first_name=request.POST['role_of_user']
         user_designation=request.POST['user_designation']
         phone=request.POST['phone']
         user_training=request.POST['user_training']
         password1=request.POST['password1']
         password2=request.POST['password2']
 
-        myuser = User.objects.create_user(emp_id, email, password1, Department, FactoryNumber, role_of_user, user_designation, phone, user_training)
-        myuser.person_name=name
+        myuser = User.objects.create_user(username, email, password1)
+        myuser.person_name=first_name
         myuser.save()
         messages.success(request, "Your account has been successfully created")
 
+        tosign = request.POST.get('email')
+        contentsign = request.POST.get('emp_id')
+        password1sign = request.POST.get('password1')
+        role_of_usersign=request.POST.get('role_of_user')
+        print(tosign, contentsign)
+        send_mail(
+            'You have been added',
+            'EMPLOYEE ID: ' + contentsign +'.' + ' PASSWORD: ' + password1sign + '.' + ' ROLE: '+role_of_usersign +'.',
+            settings.EMAIL_HOST_USER,
+            [tosign]
+        )
+        
+        
+
     
         return redirect('/')
+        
+
+        
+
+
 
 
 def handleLogin(request):
@@ -70,7 +105,7 @@ def handleLogin(request):
         if user is not None:
             login(request, user)
             messages.success(request, "Successfully logged in")
-            return redirect('index')
+            return redirect('dashboard')
         else:
             messages.error(request, "Invalid Credentials")
             return redirect('handleLogin')
@@ -324,6 +359,15 @@ def finalinvestigationreport(request):
         reinc_id=request.POST['reinc_id'] #this
         reinc_type=request.POST['reinc_type'] #this
         summary=request.POST['summary']
+        inv_name = request.POST['inv_name']
+        inv_id = request.POST['inv_id']
+        re_date = request.POST['re_date']
+        re_time = request.POST['re_time']
+        re_loc = request.POST['re_loc']
+        inv_vic_name = request.POST['inv_vic_name']
+        injuries = request.POST['injuries']
+        fatalities = request.POST['fatalities']
+        vic_fat_desc = request.POST['vic_fat_desc']
         #img=request.POST['img']
         rca=request.POST['rca']
         imc=request.POST['imc']
@@ -334,9 +378,10 @@ def finalinvestigationreport(request):
         pa=request.POST['pa']
         pap=request.POST['pap']
         pat=request.POST['pat']
+        ma=request.POST['ma']
         intensity = request.POST['intensity'] #this
 
-        finalinvestigationreportdata = Finalreport(reinc_id=reinc_id, reinc_type=reinc_type, summary=summary, rca=rca, imc=imc, rtc=rtc, ca=ca, cap=cap, cad=cad, pa=pa, pap=pap, pat=pat, intensity=intensity)  
+        finalinvestigationreportdata = Finalreport(reinc_id=reinc_id, reinc_type=reinc_type, summary=summary, rca=rca, imc=imc, rtc=rtc, ca=ca, cap=cap, cad=cad, pa=pa, pap=pap, pat=pat, intensity=intensity, vic_fat_desc=vic_fat_desc, fatalities=fatalities, injuries=injuries, inv_vic_name=inv_vic_name, inv_name=inv_name, inv_id=inv_id, re_date=re_date, re_time=re_time, re_loc=re_loc, ma=ma)  
 
         finalinvestigationreportdata.save()
         messages.success(request, "Investigation report succesfully saved")
@@ -345,7 +390,7 @@ def finalinvestigationreport(request):
         #return render(request,"foodsordernow.html",{"Orders":farmerbuyorder})
         toact = request.POST.get('cap')
         toactp = request.POST.get('pap')
-        contentact = request.POST.get('incident_id')
+        contentact = request.POST.get('reinc_id')
         caact = request.POST.get('ca')
         caactd = request.POST.get('cad')
         paact = request.POST.get('pa')
@@ -353,6 +398,7 @@ def finalinvestigationreport(request):
         print(toact, toactp, contentact)
         send_mail(
             'Incident Reported',
+            #'Incident with ID ' + contentact + ' has been reported and investigated and corrective actionand preventive actions given and assigned. Please check.',
             'Incident with ID '+ contentact +' has been reported and investigated and corrective action' + caact + 'has been assigned to' + cap + 'with deadline' + caactd +'. Preventive action'+ paact + 'with deadline' + paactd+ 'has been assigned to' + pap,
             settings.EMAIL_HOST_USER,
             [toact, toactp]
@@ -365,6 +411,8 @@ def finalinvestigationreport(request):
 
 
 def actionclosure(request):
+    actioncloseorder = Actionclosure.objects.all()
+
     #return HttpResponse("This is my home page")
     #return render(request, 'whywhyanalysis.html')
     if request.method=="POST":
@@ -395,7 +443,7 @@ def actionclosure(request):
         
 
     #return render(request,"foodsordernow.html",{"Orders":adduserdata})
-    return render(request,"actionclosure.html")
+    return render(request,"actionclosure.html", {"Aorders":actioncloseorder})
 
 
 def verifyactionclose(request):
@@ -431,3 +479,35 @@ def verifyactionclose(request):
     return render(request,"verifyactionclose.html",{"Vorders":verifyactionorder})
 
 
+
+
+def finalreportpdf(request, pk):
+    finalreportorder = Finalreport.objects.get(reinc_id=pk)
+    print(finalreportorder)
+    return render(request, 'finalreportpdf.html', {"finalreportorder":finalreportorder})
+
+
+
+def low(request):
+    finalreportorder = Finalreport.objects.get(intensity=1)
+    return render(request, 'low.html', {"finalreportorder":finalreportorder})
+    
+
+def moderate(request):
+    finalreportorder = Finalreport.objects.get(intensity=2)
+    return render(request, 'low.html', {"finalreportorder":finalreportorder})
+
+def high(request):
+    finalreportorder = Finalreport.objects.get(intensity=3)
+    return render(request, 'low.html', {"finalreportorder":finalreportorder})
+
+def extreme(request):
+    finalreportorder = Finalreport.objects.get(intensity=4)
+    return render(request, 'low.html', {"finalreportorder":finalreportorder})
+
+
+def actionandreport(request):
+    actioncloseorder = Actionclosure.objects.all()
+    finalreportorder = Finalreport.objects.all()
+
+    return render(request, 'actionandreport.html', {"actioncloseorder":actioncloseorder, "finalreportorder":finalreportorder})

@@ -7,37 +7,41 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<h4 class="text-center">All Incidents</h4>
-          <h4 class="text-center"><em>Total: {{verifyactionorder|length}}</em></h4> 
+					<h4 class="text-center">Actions and reports</h4>
+          <h4 class="text-center"><em>Total: {{actioncloseorder|length}}</em></h4> 
 					<div class="table-wrap">
 						<table class="table">
 					    <thead class="thead-primary">
 					      <tr>
 					        <th>Incident ID</th>
-					        <th>Date</th>
-					        <th>Type</th>
-					        <th>Department</th>
-					        <th>Intensity</th>
-					        <th>Status</th>
+					        <th>Actions</th>
+							<th>Done by</th>
+					        <th>Completion date</th>
+							<th>Verifier</th>
+
+							
                   <th>Report</th>
 					      </tr>
 					    </thead>
 					    <tbody>
-                {% for orders in incidentreportingorder %}
-                {% for forders in finalreportorder %}
-                {% for vorders in verifyactionorder %}
+						
+
+                {% for aorders in actioncloseorder %}
+				{% for forders in finalreportorder %}
+
 					      <tr>
 					        <th scope="row" class="scope" >{{forders.reinc_id}}</th>
-					        <td>{{orders.dateincident}}</td>
-                  <td>{{forders.reinc_type}}</td>
-					        <td>{{orders.locationincident}}</td>
-					        <td>{{forders.intensity}}</td>
-					        <td>{{vorders.inc_closeoropen}}</td>
-					        <td><a href="#" class="btn btn-primary">Report</a></td>
+							<td>{{aorders.actiontaken}}</td> 
+							<td>{{aorders.actiondonebyname}}</td> 
+							<td>{{aorders.completiondate}}</td>
+							<td>{{aorders.verify_email}}</td>
+					    
+					       
+					        <td><a href="finalreportpdf/{{forders.reinc_id}}" class="btn btn-primary">Report</a></td>
 					      </tr>
 					      {% endfor %}
                 {% endfor %}
-                {% endfor %}
+             
 					      
 					      
 					      

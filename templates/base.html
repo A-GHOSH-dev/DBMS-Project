@@ -4,15 +4,19 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   
     {% load static %}
+
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
     />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
     <link rel="stylesheet" href="{% static 'css/dataTables.bootstrap5.min.css' %}" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
 
 
 
@@ -44,7 +48,7 @@
         </button>
         <a
           class="navbar-brand me-auto ms-lg-0 ms-3 text-uppercase fw-bold"
-          href="#"
+          href="/dashboard"
           >Incident Mangement Software</a
         >
         <button
@@ -323,10 +327,11 @@
 
 
 <footer class="bg-dark text-center text-lg-start">
+  
   <!-- Copyright -->
   <div class="text-center p-3 text-light">
-    © 2021 Copyright:
-    <a class="text-light" href="#">20MIC0063351743DBMS</a>
+    Return to the 
+    <a class="text-light" href="/">HOME page</a>
   </div>
   <!-- Copyright -->
 </footer>
