@@ -31,11 +31,12 @@ def dashboard(request):
 
 
 def allincidentslist(request):
-    assigninvestigatororder = Assigninvestigator.objects.all()
     incidentreportingorder = Incidentreporting.objects.all()
+    assigninvestigatororder = Assigninvestigator.objects.all()
+    
     #return HttpResponse("This is my home page")
     #return render(request, 'allincidentslist.html')
-    return render(request,"allincidentslist.html",{"assigninvestigatororder":assigninvestigatororder, "incidentreportingorder":incidentreportingorder})
+    return render(request,"allincidentslist.html",{"incidentreportingorder":incidentreportingorder, "assigninvestigatororder":assigninvestigatororder })
 def incidentenquiry(request):
     incidentreportingorder = Incidentreporting.objects.all()
     finalreportorder = Finalreport.objects.all()
